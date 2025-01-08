@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,7 +23,18 @@ public class DocumentService {
         return documentRepository.save(document);
     }
 
-    public Optional<Document> findById(Long id) {
-        return documentRepository.findById(id);
+    public Document findById(Long id) {
+        log.debug("Request to get Document by ID: {}", id);
+        return documentRepository.findById(id).orElse(null);
+    }
+
+    public List<Document> findAll() {
+        log.debug("Request to find all Documents");
+        return documentRepository.findAll();
+    }
+
+    public void deleteById(Long id) {
+        log.debug("Request to delete Document with id: {}", id);
+        documentRepository.deleteById(id);
     }
 }
