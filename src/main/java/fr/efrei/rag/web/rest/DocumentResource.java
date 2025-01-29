@@ -26,7 +26,7 @@ public class DocumentResource {
     @PostMapping
     public ResponseEntity<Document> createDocument(@RequestBody Document document) throws URISyntaxException {
         log.debug("REST request to save Document : {}", document);
-        Document result = documentService.buildAndSaveDocument(document);
+        Document result = documentService.buildAndSave(document);
         return ResponseEntity.created(new URI("/documents/" + result.getId())).body(result);
     }
 
@@ -42,6 +42,13 @@ public class DocumentResource {
         log.debug("REST request to get Document : {}", id);
         Document document = documentService.findById(id);
         return ResponseEntity.ok(document);
+    }
+
+    @PostMapping("/documents/chat/{user}")
+    public String chat(@RequestBody String query) throws InterruptedException {
+        String result = documentService.chat(query);
+
+        return result;
     }
 
     @DeleteMapping("/{id}")
